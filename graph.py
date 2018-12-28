@@ -15,7 +15,7 @@ class Plot:
     def graph_ps(self, data):
         xs = [n[0] for n in data]
         ys = [n[1] for n in data]
-        self.plot.scatter(xs, ys, c='white', alpha=0.5, s=200)
+        self.plot.scatter(xs, ys, c='grey', alpha=0.5, s=200)
 
     def display(self):
         self.plot.show()
