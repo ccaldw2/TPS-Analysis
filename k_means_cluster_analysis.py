@@ -1,11 +1,13 @@
 from sklearn.cluster import KMeans
-import numpy as np
-import data_manager as dm
 
-homicides = np.array(dm.select_data('Homicide.csv', [0, 1]))  # X & Y coordinates of reported homicide
-num_divisions = 17
 
-k_means = KMeans(n_clusters=num_divisions, init='k-means++')
+def k_m_clustering(num_clusters, data):
+    k_means = KMeans(num_clusters)
 
-k_means.fit(homicides)
-print(k_means.cluster_centers_)
+    labels = k_means.fit_predict(data)
+    fit_data = zip(data, labels)
+    cluster_means = k_means.cluster_centers_
+
+    return cluster_means, fit_data
+
+
