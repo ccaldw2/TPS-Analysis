@@ -2,6 +2,7 @@ import data_manager as dm
 import k_means_cluster_analysis as kmca
 import graph as gr
 import numpy as np
+from rms_error_calc import min_dists, euclidian_rms_error, euclidian_mae_error
 
 data = np.array(dm.select_data('homicide.csv', [0, 1]), dtype='float')
 data = [[float(n)
@@ -21,7 +22,13 @@ tps_divisions = 17
 clusters, fit = kmca.k_m_clustering(tps_divisions, data)
 
 graph = gr.Plot()
-
 graph.graph_cluster(data, fit, clusters)
+
 graph.graph_ps(tps_locations)
+
+dists, _ = min_dists(clusters.tolist(), tps_locations.copy())
+err2 = euclidian_rms_error(clusters.tolist(), tps_locations.copy())
+err1 = euclidian_mae_error(clusters.tolist(), tps_locations.copy())
+graph.add_arrows(dists)
+graph.add_txt("RMS euclidian error is %s, \nMAE eucllidian error is %s" % (round(err2, 4), round(err1, 4)))
 graph.display()
